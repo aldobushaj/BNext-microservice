@@ -1,4 +1,4 @@
-package com.github.taass.bnextuser;
+package bnext.backend.bnextuser;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

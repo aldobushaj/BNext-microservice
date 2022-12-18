@@ -1,4 +1,4 @@
-package com.github.taass.bnextuser;
+package bnext.backend.bnextuser;
 
 
 
