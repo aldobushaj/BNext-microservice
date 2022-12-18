@@ -1,29 +1,87 @@
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {BrowserModule} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  CommonModule, LocationStrategy,
+  PathLocationStrategy
+} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Routes, RouterModule } from '@angular/router';
 
-import { HttpInterceptorService } from './Services/httpInterceptor.service';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {Page404Component} from './page404/page404.component';
-import { SigninComponent } from './signin/signin.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomeComponent } from './home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { FullComponent } from './layouts/full/full.component';
+
+
+import { NavigationComponent } from './shared/header/navigation.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+
+import { Approutes } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { SpinnerComponent } from './shared/spinner.component';
+import { MatSidenavModule } from '@angular/material/sidenav'
+
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatMenuModule } from '@angular/material/menu';
+
+
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { SigninComponent } from './userFunctionality/signin/signin.component';
+import { SignupComponent } from './userFunctionality/signup/signup.component';
+import { HttpInterceptorService } from './utils/Services/httpInterceptor.service';
+
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true,
+  wheelSpeed: 1,
+  wheelPropagation: true,
+  minScrollbarLength: 20,
+};
+const MaterialComponents=[
+  MatSidenavModule,
+  MatButtonModule,
+  MatButtonToggleModule
+]
 
 @NgModule({
   declarations: [
     AppComponent,
-    Page404Component,
+    SpinnerComponent,
+    FullComponent,
+    NavigationComponent,
+    SidebarComponent,
+    // elementi utili per fare il login, altrimenti da errore di import perché non sa cos'è il form
     SigninComponent,
-    SignupComponent,
-    HomeComponent
+    SignupComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
-    AppRoutingModule, HttpClientModule, FormsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    MaterialComponents,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    MatMenuModule,
+    RouterModule.forRoot(Approutes, { useHash: false, relativeLinkResolution: 'legacy' }),
+    PerfectScrollbarModule,
+
   ],
   providers: [
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy
+    },
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
