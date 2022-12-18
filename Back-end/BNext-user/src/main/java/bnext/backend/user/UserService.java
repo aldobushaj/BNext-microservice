@@ -32,6 +32,7 @@ public class UserService {
 
         //System.out.println("Passo "+requestEntity);
         String url = "http://OTHER-SERVICE/cars/";
+        // Ritorno una lista di macchine, quindi faccio gli opportuni cast
         List<Car> cars = List.of(restTemplate.exchange(url, HttpMethod.GET, requestEntity, Car[].class).getBody());
 
         System.out.println("Funzionaaaa "+cars);
