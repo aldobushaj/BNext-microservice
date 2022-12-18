@@ -31,7 +31,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String header = request.getHeader("Authorization");
-		System.out.println("eccoooo "+header);
 		if (header == null || !header.startsWith("Bearer ")) {
 			throw new JwtTokenMissingException("No JWT token found in the request headers");
 		}
