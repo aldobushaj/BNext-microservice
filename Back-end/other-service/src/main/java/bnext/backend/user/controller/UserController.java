@@ -58,6 +58,11 @@ public class UserController {
 
     }
 
+    @PostMapping("/google")
+    public ResponseEntity<Response> googleLogin(@RequestBody @NotNull User user) {
+        return userService.googleLogin(user);
+
+    }
 
     @PutMapping("/update")
     public String updateUser(@RequestBody @NotNull User user){

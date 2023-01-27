@@ -36,8 +36,8 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// Dobbiamo far entrare chiunque in questi due URL
-		web.ignoring().antMatchers("/user/signin", "/user/signup", "/h2-console/**");
+		// Dobbiamo far entrare chiunque in questi URL
+		web.ignoring().antMatchers("/user/signin", "/user/signup", "/h2-console/**", "/user/google");
 	}
 
 	@Autowired
@@ -49,8 +49,11 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 				// Permettiamo l'accesso a questi URL
-				.authorizeRequests().antMatchers("/user/signin", "/user/signup").permitAll()
-				.anyRequest().authenticated().and().exceptionHandling()
+				.authorizeRequests().antMatchers("/user/signin", "/user/signup", "/user/google").permitAll()
+				.anyRequest().authenticated()
+				// autorizzo anche il login oauth 2 tramite google
+				.and().oauth2Login().permitAll()
+				.and().exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

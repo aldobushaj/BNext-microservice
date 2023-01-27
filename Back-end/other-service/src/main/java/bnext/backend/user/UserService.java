@@ -123,6 +123,12 @@ public class UserService {
         return new ResponseEntity<String>("User successfully registered", HttpStatus.OK);
     }
 
+    public ResponseEntity<Response> googleLogin(User user) {
+        Response response = new Response();
+        response.setUser(user);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
+    }
+
     public String updateUser(User user) {
         // verifico che esista la macchina con l'id indicato
         if (userRepository.findById(user.getUserId()).isEmpty())
